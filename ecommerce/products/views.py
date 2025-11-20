@@ -19,3 +19,21 @@ def add_category(request):
 def category_list(request):
     categories = Category.objects.all()
     return render(request,"products/category_list.html",{'categories':categories})
+
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, 'products/product_list.html', {'products': products})
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = ProductForm()
+    return render(request, 'products/add_product.html', {'form': form})
+
+def product_detail(request, pk):
+    product = Product.objects.get(pk=pk)
+    return render(request, 'products/product_detail.html', {'product': product})

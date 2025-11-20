@@ -1,4 +1,3 @@
-
 <h1>Products</h1>
 <a href="{% url 'product_create' %}">Add New Product</a>
 
@@ -8,6 +7,15 @@
       <strong>{{ product.name }}</strong> - ${{ product.price }}
       <br>Category: {{ product.category.name }}
       <br>
+      {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100" />
+      {% endif %}
+      <br>
+      {{ product.description|truncatewords:20 }}
+      <br>
+      <!-- Optional: Link to detail page (if you have one) -->
+      <a href="{% url 'product_detail' product.pk %}">View Details</a>
+      <br><br>
     </li>
   {% empty %}
     <li>No products yet.</li>
